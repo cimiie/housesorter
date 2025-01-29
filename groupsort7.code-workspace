@@ -1,0 +1,35 @@
+{
+  "folders": [
+    {
+      "path": "."
+    }
+  ],
+  "settings": {
+    "github.copilot.enable": {
+      "*": true,
+      "plaintext": true,
+      "markdown": true,
+      "javascript": true
+    },
+    "github.copilot.editor.enableAutoCompletions": true,
+    "github.copilot.editor.enableCodeActions": true,
+    "github.copilot.chat.followUps": true,
+    "github.copilot.chat.localeOverride": "en",
+    "github.copilot.chat.useProjectTemplates": true,
+    "github.copilot.renameSuggestions.triggerAutomatically": true,
+    "github.copilot.chat.codeGeneration.instructions": [
+      { "text": "Use NextUI components with Tailwind CSS classes" },
+      { "text": "Follow React functional component patterns" },
+      { "text": "Use JavaScript instead of TypeScript" },
+      { "text": "Include appropriate NextUI imports" },
+      { "text": "Follow NextUI theming conventions" },
+      { "text": "Prioritize responsive design using Tailwind breakpoints" },
+      { "text": "Use Zustand for state management" },
+      { "text": "Follow Zustand best practices for store creation and updates" },
+      { "text": "Implement selective state updates for better performance" },
+      { "text": "Implement tables using TanStack Table for powerful table features" },
+      { "text": "Use TanStack Virtual for efficient list and grid virtualization" },
+      { "text": "Implement drag and drop functionality using DND Kit" }
+    ]
+  }
+}

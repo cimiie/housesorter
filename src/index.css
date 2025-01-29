@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Root variables for font family */
+:root {
+  --font-family: 'Inter', sans-serif;
+}
+
+/* Base styles */
+body {
+  @apply flex items-center justify-center min-h-screen text-gray-900;
+  font-family: var(--font-family);
+}
+
+a {
+  @apply text-blue-500 hover:underline;
+}
+
+button {
+  @apply px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  @apply font-bold;
+}
+
+p {
+  @apply mb-4;
+}

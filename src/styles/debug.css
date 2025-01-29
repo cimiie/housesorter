@@ -1,0 +1,36 @@
+.debug-scrollbar {
+  /* Debug borders */
+  border: 2px solid rgba(255, 0, 0, 0.2);
+  
+  /* Visible scrollbar for debugging */
+  scrollbar-width: thin;
+  scrollbar-color: #666 #ddd;
+}
+
+.debug-scrollbar::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.debug-scrollbar::-webkit-scrollbar-track {
+  background: #ddd;
+}
+
+.debug-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #666;
+  border-radius: 4px;
+}
+
+/* Dark mode support */
+:root[class~="dark"] .debug-scrollbar {
+  border-color: rgba(0, 255, 0, 0.2);
+  scrollbar-color: #888 #333;
+}
+
+:root[class~="dark"] .debug-scrollbar::-webkit-scrollbar-track {
+  background: #333;
+}
+
+:root[class~="dark"] .debug-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #888;
+}
