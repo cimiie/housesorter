@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
+import PropTypes from 'prop-types';
 import { Input } from "@nextui-org/react";
 import { useHouseStore } from '../stores/houseStore';
 
@@ -8,7 +9,6 @@ export default function Houses() {
     const { houses, updateHouses } = useHouseStore();
 
     useEffect(() => {
-        // Initialize 4 houses if less than 4 exist
         if (houses.length < 4) {
             const newHouses = [...houses];
             while (newHouses.length < 4) {
@@ -16,17 +16,19 @@ export default function Houses() {
             }
             updateHouses(newHouses.slice(0, 4));
         }
-    }, []);
+    }, [houses, updateHouses]);
 
-    const handleChange = (index, value) => {
-        const newHouses = [...houses];
-        if (!newHouses[index]) {
-            newHouses[index] = { id: generateUID(), name: value };
-        } else {
-            newHouses[index] = { ...newHouses[index], name: value };
-        }
+    const handleChange = useCallback((index, value) => {
+        const newHouses = houses.map((house, i) => {
+            if (i === index) {
+                return house.id 
+                    ? { ...house, name: value }
+                    : { id: generateUID(), name: value };
+            }
+            return house;
+        });
         updateHouses(newHouses);
-    };
+    }, [houses, updateHouses]);
 
     return (
         <div className="flex items-center justify-center w-full h-full">
@@ -59,3 +61,5 @@ export default function Houses() {
         </div>
     );
 }
+
+Houses.propTypes = {};
