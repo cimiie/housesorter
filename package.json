@@ -1,5 +1,6 @@
 {
-  "name": "groupsort7",
+  "name": "housesorter",
+  "homepage": "https://cimiie.github.io/housesorter",
   "private": true,
   "version": "0.0.0",
   "type": "module",
