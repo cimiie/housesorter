@@ -1,16 +1,11 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import { NextUIProvider } from '@nextui-org/react'
-import { ThemeProvider as NextThemesProvider } from "next-themes";
-import App from './App'
-import './index.css'
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from './App';
+import './index.css';
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+ReactDOM.render(
   <React.StrictMode>
-    <NextUIProvider>
-      <NextThemesProvider attribute="class" defaultTheme="system">
-        <App />
-      </NextThemesProvider>
-    </NextUIProvider>
+    <App />
   </React.StrictMode>,
-)
+  document.getElementById('root')
+);
