@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useRef, useCallback, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { flexRender } from '@tanstack/react-table'
 import { useSortable } from '@dnd-kit/sortable'
@@ -106,14 +106,38 @@ const TableBody = ({ table }) => {
     count: table.getRowModel().rows.length,
     getScrollElement: () => parentRef.current,
     estimateSize: () => 60,
-    overscan: 5
+    overscan: 5,
+    scrollPaddingStart: 4,
+    scrollPaddingEnd: 4
   })
+
+  // Add resize observer cleanup
+  useEffect(() => {
+    const element = parentRef.current
+    if (!element) return
+
+    const resizeObserver = new ResizeObserver((entries) => {
+      // Debounce the update
+      requestAnimationFrame(() => {
+        rowVirtualizer.measure()
+      })
+    })
+
+    resizeObserver.observe(element)
+    return () => {
+      resizeObserver.disconnect()
+    }
+  }, [rowVirtualizer])
 
   const virtualRows = rowVirtualizer.getVirtualItems()
   const totalSize = rowVirtualizer.getTotalSize()
 
   return (
-    <div ref={parentRef} className="flex-1 overflow-auto">
+    <div 
+      ref={parentRef} 
+      className="flex-1 overflow-auto"
+      style={{ willChange: 'transform' }} // Optimization for scroll performance
+    >
       <div className="p-2 flex gap-4 h-full">
         {table.getVisibleFlatColumns().map(column => (
           <div 
