@@ -27,9 +27,9 @@ import TableBody from '../components/TableBody'
 import useStudentStore from '../stores/StudentStore'
 import { useHouseStore } from '../stores/houseStore'
 import useLockStore from '../stores/lockStore'
-import { Lock, Unlock } from 'lucide-react'
 import useSearchStore from '../stores/searchStore'
 import TableLoading from '../components/TableLoading'
+import DraggableOverlay from '../components/DraggableOverlay'
 
 const Sort = () => {
   const [sorting, setSorting] = useState([])
@@ -194,26 +194,11 @@ const Sort = () => {
               />
             </div>
           </SortableContext>
-          <DragOverlay>
-            {activeId && (
-              <Card className="p-2 bg-default-100 min-w-[200px] shadow-lg select-none">
-                <div className="flex items-center">
-                  <div className="p-2 select-none">
-                    {lockedStudents.has(activeId) ? (
-                      <Lock size={16} className="text-danger pointer-events-none" />
-                    ) : (
-                      <Unlock size={16} className="text-default-400 pointer-events-none" />
-                    )}
-                  </div>
-                  <div className="flex-1 text-center text-default-600 pointer-events-none">
-                    {Object.values(distributedStudents)
-                      .flat()
-                      .find(student => student.id === activeId)?.name || ''}
-                  </div>
-                </div>
-              </Card>
-            )}
-          </DragOverlay>
+          <DraggableOverlay 
+            activeId={activeId}
+            students={Object.values(distributedStudents).flat()}
+            lockedStudents={lockedStudents}
+          />
         </DndContext>
       </Card>
     </div>
