@@ -142,16 +142,13 @@ const TableBody = ({ table }) => {
         {table.getVisibleFlatColumns().map(column => (
           <div 
             key={column.id} 
-            className="flex-1 min-w-[200px] relative group"
+            className="flex-1 min-w-[200px] relative"
             data-column-id={column.id}
           >
             <div 
               className="flex flex-col gap-2 relative min-h-full"
               style={{ height: `${Math.max(totalSize, '100%')}px` }}
             >
-              <div className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity">
-                <div className="h-full border-2 border-dashed border-primary/30 rounded-lg" />
-              </div>
               {virtualRows.map(virtualRow => {
                 const row = table.getRowModel().rows[virtualRow.index]
                 const cell = row.getVisibleCells().find(c => c.column.id === column.id)
