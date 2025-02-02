@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useMemo, memo, useRef } from 'react'
+import React, { useCallback, useState, useMemo, memo, useRef, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import useStudentStore from '../stores/StudentStore'
 import { useDropzone } from 'react-dropzone'
@@ -72,14 +72,25 @@ const Students = () => {
   const parentRef = useRef(null)
   const [forceUpdate, setForceUpdate] = useState(0)
 
+  useEffect(() => {
+    if (students.length === 1) {
+      // Force virtualization update on first item
+      setTimeout(() => {
+        setForceUpdate(prev => prev + 1)
+      }, 0)
+    }
+  }, [students.length])
+
   const handleAddStudent = (e) => {
     if (e) e.preventDefault()
     if (newStudent.trim()) {
-      const wasEmpty = students.length === 0
       addStudent({ name: newStudent.trim() })
       setNewStudent('')
-      if (wasEmpty) {
-        setForceUpdate(prev => prev + 1)
+      // Immediate update for first item
+      if (students.length === 0) {
+        setTimeout(() => {
+          setForceUpdate(prev => prev + 1)
+        }, 0)
       }
     }
   }
@@ -114,7 +125,8 @@ const Students = () => {
     count: students.length,
     getScrollElement: () => parentRef.current,
     estimateSize: () => 45,
-    overscan: 5
+    overscan: 5,
+    initialOffset: 0, // Add this to ensure proper initial positioning
   })
 
   const virtualizedContent = useMemo(() => (
@@ -163,6 +175,10 @@ const Students = () => {
         <div className="flex flex-col gap-2">
           <div className="flex gap-2">
             <Input
+              type="text"
+              name="no-name"
+              id="no-name"
+              autoComplete="new-password"
               value={newStudent}
               onChange={(e) => setNewStudent(e.target.value)}
               onKeyDown={handleKeyDown}
@@ -171,7 +187,6 @@ const Students = () => {
                   handleAddStudent();
                 }
               }}
-              autoComplete="off"
               autoCorrect="off"
               autoCapitalize="off"
               spellCheck="false"
