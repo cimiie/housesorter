@@ -11,7 +11,8 @@ const Dropzone = ({ handleFileUpload }) => {
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop: handleFileUpload,
     accept: {
-      'text/csv': ['.csv']
+      'text/csv': ['.csv'],
+      'application/vnd.ms-excel': ['.csv']  // Add this for better CSV support
     }
   })
 
@@ -21,11 +22,13 @@ const Dropzone = ({ handleFileUpload }) => {
       className={`border-2 border-dashed rounded-lg p-8 text-center cursor-pointer
         ${isDragActive ? 'border-primary bg-primary/10' : 'border-gray-300'}`}
     >
-      <input {...getInputProps()} />
+      <input {...getInputProps()} accept=".csv" />
       {isDragActive ? (
         <p>Drop the CSV file here ...</p>
       ) : (
-        <p>Drag and drop CSV file here, or click to select file</p>
+        <div className="space-y-1">
+          <p>Drag and drop CSV file here, or click to select file</p>
+        </div>
       )}
     </div>
   )
@@ -198,7 +201,7 @@ const Students = () => {
               autoCorrect="off"
               autoCapitalize="off"
               spellCheck="false"
-              placeholder="Enter student name (First Last)"
+              placeholder="Enter student name"
               className="flex-1"
               classNames={{
                 input: "text-small",
