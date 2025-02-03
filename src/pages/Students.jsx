@@ -72,6 +72,14 @@ const Students = () => {
   const parentRef = useRef(null)
   const [forceUpdate, setForceUpdate] = useState(0)
 
+  // Add this new useEffect for initial mount
+  useEffect(() => {
+    if (students.length > 0) {
+      // Force virtualization update on mount if there are existing students
+      setForceUpdate(prev => prev + 1)
+    }
+  }, []) // Empty dependency array for mount only
+
   useEffect(() => {
     if (students.length === 1) {
       // Force virtualization update on first item
